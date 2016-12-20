@@ -40,7 +40,7 @@ router.get('/register', function (req, res, next) {
                     console.log('user :'+user);
 
                     resultWrapper(res, err, user, function () {
-                        mailgun(user.email, user._id);
+                        //do sth
                     });
                 })
 

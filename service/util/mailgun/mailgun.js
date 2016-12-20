@@ -3,8 +3,8 @@
  */
 
 
-var api_key = 'key-aa4a521970a29a46229414e40e2a399d';
-var domain = 'mail.brusport.com';
+var api_key = '';
+var domain = '';
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 var data = {
