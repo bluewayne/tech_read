@@ -1,0 +1,27 @@
+{
+  "name": "service",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "nodemon --debug ./bin/www"
+  },
+  "dependencies": {
+    "async": "^2.1.4",
+    "body-parser": "~1.13.2",
+    "canvas": "^1.6.2",
+    "cheerio": "^0.22.0",
+    "cheero": "0.0.1",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "ejs": "~2.3.3",
+    "eventproxy": "^0.3.5",
+    "express": "~4.13.1",
+    "mailgun-js": "^0.7.14",
+    "morgan": "~1.6.1",
+    "nodemon": "^1.11.0",
+    "serve-favicon": "~2.3.0",
+    "superagent": "^3.1.0",
+    "superagent-retry": "^0.6.0"
+  }
+}

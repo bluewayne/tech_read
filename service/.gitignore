@@ -1,0 +1,4 @@
+node_modules/
+
+
+git remote add origin git@github.com:bluewayne/tech_read.git

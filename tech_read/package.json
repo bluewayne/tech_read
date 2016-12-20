@@ -1,0 +1,24 @@
+{
+  "name": "tech_read",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "canvas": "^1.6.2",
+    "react": "15.4.1",
+    "react-native": "0.38.0",
+    "react-native-root-toast": "^1.0.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "devDependencies": {
+    "babel-jest": "17.0.2",
+    "babel-preset-react-native": "1.9.0",
+    "jest": "17.0.3",
+    "react-test-renderer": "15.4.1"
+  }
+}
