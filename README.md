@@ -1,6 +1,8 @@
 # tech_read/技术阅读器-mainly focus on front-end
-a tool app for coder to read
 
+开发发爱好者阅读器.
+
+项目还在持续开发中，界面暂时比较简单，包括部分界面路由没处理好，各种余下bug,有时间会持续修掉.
 
 
 <h3>1.项目的初衷</h3>
@@ -62,4 +64,8 @@ react-native run-ios
 ![Image text](./react_show.gif)
 
 
+#MIT
 
+版权所有（c）2016 @ bruce liu <ljhjay1@163.com>
+
+仅供学习参考，不得用于商业目的.
