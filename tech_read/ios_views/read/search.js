@@ -42,11 +42,12 @@ class search extends React.Component {
         return (
             <View style={styles.container}>
                 <TextInput style={styles.textInput}
-                    placeholder="搜索"
-                    onSubmitEditing={(event)=> {
+                           placeholder="搜索"
+                           onSubmitEditing={(event)=> {
                         this._search(event.nativeEvent.text);
                     }}
-                    placeholderTextColor="#5e6877"/>
+                           placeholderTextColor="#5e6877"
+                           autoCapitalize={'none'}/>
             </View>
         );
     }
@@ -56,12 +57,12 @@ const styles = StyleSheet.create({
     container: {
         marginTop: 20
     },
-    textInput:{
+    textInput: {
         height: 35,
         borderRadius: 3,
         borderColor: "#EEE",
-        padding:10,
-        margin:10,
+        padding: 10,
+        margin: 10,
         borderWidth: 1
 
     }

@@ -62,7 +62,14 @@ router.get('/login', function (req, res, next) {
     userModel.findOne({email: email, password: password}, function (err, user) {
 
         console.log('user :'+user);
-        resultWrapper(res, err, user)
+
+        if(user){
+            resultWrapper(res, err, user)
+        }else{
+
+            resultWrapper(res, '该用户不存在!!!', {})
+
+        }
 
     })
 
