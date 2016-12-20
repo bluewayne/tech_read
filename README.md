@@ -22,35 +22,39 @@ a tool app for coder to read
 
 <h3>5.服务启动</h3>
 5.1 启动 MongoDB
-`
+
+```
 mongod --config /usr/local/etc/mongod.conf
-`
+```
 5.3. 安装相关架包
-`
+
+```
  cd service
  npm i
-`
+```
 
 5.2 运行爬虫工具 tech_read.js
 
-`service
+```
+service
     util
         crawler
             tech_read
                 tech_read.js
-`
+```
 
 5.3 启动express服务
-`
+
+```
 sudo npm run dev
-`
+```
 5.4 运行react-native
 
-`
+```
 cd tech_read
 npm i
 react-native run-ios
-`
+```
 
 
 
