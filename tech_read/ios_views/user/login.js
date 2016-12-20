@@ -58,13 +58,14 @@ class login extends React.Component {
                         hideOnPress: true,
                         delay: 0
                     })
-                    //this.props.navigator.pop();
+                    that.props.navigator.pop();
+                    //
+                    //that.props.navigator.replace({
+                    //    component: SettingPage,
+                    //    titile: '设置',
+                    //    barTintColor: '#fff'
+                    //});
 
-                    that.props.navigator.replace({
-                        component: SettingPage,
-                        titile: '设置',
-                        barTintColor: '#fff'
-                    });
                 } else {
                     console.log('get error ' + res.errors);
 

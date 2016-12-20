@@ -28,13 +28,25 @@ router.get('/register', function (req, res, next) {
     }
 
     if(email&&password){
-        userModel.create({email: email, password: password}, function (err, user) {
-            console.log('user :'+user);
 
-            resultWrapper(res, err, user, function () {
-                mailgun(user.email, user._id);
-            });
+        userModel.findOne({email: email}, function (err, user) {
+
+            if(user){
+                resultWrapper(res, '邮箱已经注册过!!', {})
+
+            }else{
+
+                userModel.create({email: email, password: password}, function (err, user) {
+                    console.log('user :'+user);
+
+                    resultWrapper(res, err, user, function () {
+                        mailgun(user.email, user._id);
+                    });
+                })
+
+            }
         })
+
     }else{
         console.log('邮箱或者用户名不能为空');
         resultWrapper(res, '邮箱或者用户名不能为空!!', {})

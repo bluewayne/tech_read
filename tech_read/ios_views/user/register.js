@@ -67,12 +67,7 @@ class register extends React.Component {
                         delay: 0
                     })
 
-                    that.props.navigator.replace({
-                        component: SettingPage,
-                        title: '设置',
-                        barTintColor: '#fff'
-                    });
-                    this.props.navigator.pop();
+                    that.props.navigator.popToTop();
                 } else {
                     console.log('get error ' + res.errors);
 
@@ -124,8 +119,6 @@ class register extends React.Component {
 
     render() {
 
-        console.log('come to register');
-
         return (
             <View>
 
@@ -134,11 +127,11 @@ class register extends React.Component {
                            style={styles.logo}/>
                 </TouchableOpacity>
 
-
                 <View >
 
                     <TextInput placeholder='请输入邮箱' placeholderTextColor="#5e6877" value={this.state.inputEmail}
-                               onChangeText={(text)=>this.setState({inputEmail:text})} style={styles.textInput} autoCapitalize={'none'}/>
+                               onChangeText={(text)=>this.setState({inputEmail:text})} style={styles.textInput}
+                               autoCapitalize={'none'}/>
 
                     <TextInput placeholder='请输入密码' placeholderTextColor="#5e6877" value={this.state.inputPassword}
                                onChangeText={(text)=>this.setState({inputPassword:text})} style={styles.textInput}
