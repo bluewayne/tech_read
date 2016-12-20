@@ -58,7 +58,7 @@ siteArray.forEach(function (e) {
 
 function calcUrls(blogSite, paginationRule, itemNode, callback) {
 
-    var c = 1;//设定需要爬取的分页书
+    var c = 1;//设定需要爬取的分页数
     var urlBase = blogSite + paginationRule;
     var urlInitial = urlBase + c;
 
