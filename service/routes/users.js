@@ -6,7 +6,6 @@ var dao = require('../access/dao/index');
 var userModel = dao(user);
 var articleModel=dao(article);
 var result = require('../access/models/result')
-var mailgun = require('./util/mailgun/mailgun');
 var resultWrapper = require('./util/resultWrapper');
 var util=require('./util/util');
 
