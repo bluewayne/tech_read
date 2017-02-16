@@ -165,21 +165,21 @@ function fetchBlog(siteName, props) {
                         })
                     }
 
-                    articleDao.create({
-                        "url":url,
-                        "title":title,
-                        "from":from,
-                        "author":author,
-                        "postTime":postTime,
-                        'createTime':new Date()
-                    }, function (err,article) {
-                        if(err){
-                            console.log('insert article failed with err :'+err);
-                        }else{
-                            console.log('register success'+article);
-                        }
-
-                    });
+                    //articleDao.create({
+                    //    "url":url,
+                    //    "title":title,
+                    //    "from":from,
+                    //    "author":author,
+                    //    "postTime":postTime,
+                    //    'createTime':new Date()
+                    //}, function (err,article) {
+                    //    if(err){
+                    //        console.log('insert article failed with err :'+err);
+                    //    }else{
+                    //        console.log('register success'+article);
+                    //    }
+                    //
+                    //});
 
                     //console.log('url :' + url);
                     //console.log('title :' + title);
