@@ -14,7 +14,7 @@ import {api} from '../../../../util'
 
 const plainOptions = [];
 
-const defaultCheckedList = ['589d622301edcc7ade10db2a'];
+const defaultCheckedList = [];
 
 const RuleList = React.createClass({
     getInitialState() {
@@ -31,7 +31,7 @@ const RuleList = React.createClass({
             let options = [];
             options = res.content.map(function (rule) {
 
-                return {label: rule['name'], value: rule['name'], key: i++};
+                return {label: rule['name'], value: rule['_id'], key: i++};
             });
 
             console.log('options    :' + JSON.stringify(options));
@@ -44,8 +44,12 @@ const RuleList = React.createClass({
 
     }, handleSubmit(e) {
 
+        let that =this;
         console.log('this.state.checkedList :'+JSON.stringify(this.state.checkedList));
         api.createAPI({ruleList:this.state.checkedList,apiName:this.state.apiName}, function (res) {
+
+
+            that.props.setApi(res.content);
 
             message.success('create api success');
 
@@ -113,73 +117,34 @@ const RuleList = React.createClass({
     },
 });
 
+
 //
-//const NormalLoginForm = Form.create()(React.createClass({
-//    handleSubmit(e) {
-//        e.preventDefault();
-//        this.props.form.validateFields((err, values) => {
-//            if (!err) {
+//class step1 extends React.PureComponent {
+//    constructor(props) {
+//        super(props);
+//        this.state = {};
+//    }
 //
+//    componentDidMount() {
 //
-//                console.log('Received values of form: ', values);
+//    }
 //
-//                //api.createAPI({}, function () {
-//                //
-//                //
-//                //
-//                //})
-//            }
-//        });
-//    },
+//    componentWillUnmount() {
+//
+//    }
+//
+//    onChange(state) {
+//
+//    }
+//
 //    render() {
-//        const { getFieldDecorator } = this.props.form;
-//        return (
-//            <Form onSubmit={this.handleSubmit} className="login-form">
-//                <FormItem>
-//                    {getFieldDecorator('ruleList', {
-//                        rules: [{ required: true, message: 'Please choose atleast checkbox!' }],
-//                    })(
-//                        <RuleList/>
 //
-//                    )}
-//                </FormItem>
-//                <FormItem>
-//                    <Button type="primary" htmlType="submit" className="login-form-button">
-//                        确定选择规则
-//                    </Button>
-//                </FormItem>
-//            </Form>
+//        return (
+//            <div >
+//                <RuleList/>
+//            </div>
 //        );
-//    },
-//}));
+//    }
+//}
 
-
-class step1 extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
-    componentDidMount() {
-
-    }
-
-    componentWillUnmount() {
-
-    }
-
-    onChange(state) {
-
-    }
-
-    render() {
-
-        return (
-            <div >
-                <RuleList/>
-            </div>
-        );
-    }
-}
-
-export default step1;
+export default RuleList;

@@ -45,6 +45,7 @@ function getLoaders(style) {
 
 module.exports = {
 
+
     context: root_folder,
     entry: [devMiddlewareScript, hotMiddlewareScript, './src/client/web/entry.js'],
     output: {
@@ -61,11 +62,9 @@ module.exports = {
             use: 'babel-loader'
         }, {
             test: /\.json$/,
-            exclude: /(node_modules|bower_components)/,
             use: 'json-loader'
         }, {
             test: /\.(jpe?g|png|gif|svg|less)$/i,
-            exclude: /(node_modules|bower_components)/,
             use: ['url-loader?limit=10000']
         }, {
             test: /\.css$/,
@@ -76,10 +75,8 @@ module.exports = {
                     }
                 }]
             })
-
         }, {
             test: /\.scss$/,
-            exclude: /(node_modules|bower_components)/,
             use: ExtractTextPlugin.extract(
                 {
                     fallback: 'style-loader',

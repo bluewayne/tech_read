@@ -1,7 +1,6 @@
-
 var express = require('express');
 var router = express.Router();
-var Promise =require('bluebird');
+var Promise = require('bluebird');
 
 var user = require('../access/models/user');
 var article = require('../access/models/article');
@@ -115,6 +114,7 @@ router.get('/getCapacha', function (req, res, next) {
 
 router.get('/addRule', function (req, res, next) {
 
+    let name = req.query.name;
     let blog_site = req.query.blog_site;
     let item_node = req.query.item_node;
     let title_node = req.query.title_node;
@@ -126,6 +126,7 @@ router.get('/addRule', function (req, res, next) {
     let user_id = req.query.user_id;
 
     let rule = {
+        name: name,
         blog_site: blog_site, item_node: item_node, title_node: title_node, url_node: url_node,
         from_node: from_node, author_node: author_node, post_time: post_time, pagination_rule: pagination_rule,
         user_id: (req.session.user && req.session.user._id ) || user_id
@@ -152,14 +153,15 @@ router.get('/getRuleList', function (req, res, next) {
     console.log('req.session.user._id   :' + req.session.user._id);
     var userId = req.session.user._id || req.query.user_id;
 
-    console.log('rule   :'+JSON.stringify(rule));
-    ruleModel.find({user_id:userId}, function (err, rules) {
+    ruleModel.find({user_id: userId}, function (err, rules) {
 
-        console.log('rules  :'+JSON.stringify(rules));
+        console.log('rules  :' + JSON.stringify(rules));
         resultWrapper(res, err, rules)
     })
 
 })
+
+const rulePromiseUpdate=Promise.promisify(ruleModel.update,ruleModel);
 
 router.get('/updateRule', function (req, res, next) {
 
@@ -176,6 +178,86 @@ router.get('/updateRule', function (req, res, next) {
     })
 })
 
+let md5 = require('./util/md5');
+
+
+const apiPromiseCreate=Promise.promisify(APIModel.create,APIModel);
+
+router.get('/createAPI', function (req, res, next) {
+
+
+    console.log('creaeAPI');
+
+    let userId = req.session.user._id;
+    let email = req.session.user.email;
+    let emailName = email.split('@')[0];
+
+    let ruleList = req.query.ruleList.split(',');
+    let apiName = req.query.apiName;
+    let apiUrl = md5(req.session.user._id + apiName);
+    let encryptName = emailName + apiUrl;//这个就是table的名字
+
+    console.log('ruleList   :'+JSON.stringify(ruleList));
+        //resultWrapper(res, null, 'd');
+    let api={}
+
+    apiPromiseCreate({
+        name: apiName,
+        encryptName: encryptName,
+        ruleList: ruleList,
+        user_id: userId,
+        apiUrl: apiUrl
+    }).then(function (_api) {
+
+        api=_api.toObject();
+        return  ruleList.map(function (ruleId) {
+
+            return  rulePromiseUpdate({_id: ruleId},{$push: {apiList: api._id+''}})
+        })
+    }).then(function () {
+
+        api.showApiUrl = 'http://127.0.0.1:3001/api/articles/getArticles?apiUrl=' + api.apiUrl
+
+        resultWrapper(res, null, api)
+
+    }, function (err) {
+        resultWrapper(res, err, {})
+
+    })
+
+})
+
+let tech = require('./util/tech');
+
+router.get('/generateAPI', function (req, res, next) {
+
+    let apiID = req.query.api_id;
+    let encryptName = req.query.encryptName;
+
+    ruleModel.find({api_id: apiID}, function (err, rules) {
+
+        console.log('rules :' + JSON.stringify(rules));
+
+        let apiArticle = {...article}
+        apiArticle.name = `${encryptName}`;//这个就是table的名字
+
+        var articleDao = dao(apiArticle);
+
+        let promiseRules = tech(articleDao, rules);
+
+        Promise.all(promiseRules).then(function (values) {
+
+            resultWrapper(res, err, "success")
+
+        })
+
+    })
+
+})
+
+
+const APIPromiseFind = Promise.promisify(APIModel.find, APIModel);
+const RulePromiseFind = Promise.promisify(ruleModel.find, ruleModel);
 
 router.get('/getAPIList', function (req, res, next) {
 
@@ -183,90 +265,58 @@ router.get('/getAPIList', function (req, res, next) {
     console.log('req.session.user._id   :' + req.session.user._id);
     var userId = req.session.user._id || req.query.user_id;
 
-    console.log('rule   :'+JSON.stringify(rule));
-    APIModel.find({user_id:userId}, function (err, _apis) {
 
-        let apis=_apis.map(function (api) {
+    APIPromiseFind({user_id: userId}).then(function (_apis) {
 
-            api.apiUrl='http://127.0.0.1:3001/api/users/getRuleList?api_id='+api.apiUrl
 
-            return api;
+        console.log('_apis.length   :' + _apis.length);
+
+        let apiPromises = _apis.map(function (api) {
+
+            let _api = api.toObject();    //mongoose的object是不能给他添加属性的,可以先用toObject转化为plain object,再给对象添加自定义属性
+                                          //参考链接 http://stackoverflow.com/questions/22415758/how-do-i-add-temporary-properties-on-a-mongoose-object-just-for-response-which
+            _api.ruleNameList = [];
+            _api.showApiUrl = 'http://127.0.0.1:3001/api/articles/getArticles?apiUrl=' + api.apiUrl
+
+            let apiID = _api._id;//api._id是一个object不说一个字符串
+
+            let p = RulePromiseFind({apiList: apiID.toString()}).then(function (rs) {
+
+                return new Promise(function (resolve, reject) {
+
+                    rs.forEach(function (rule) {
+
+                        console.log('rule.name  :' + rule.name)
+
+                        _api.ruleNameList.push(rule.name);
+                    })
+
+                    resolve(_api);
+                })
+            });
+
+            return p;
 
         })
 
-        console.log('apis  :'+JSON.stringify(apis));
-        resultWrapper(res, err, apis)
-    })
+
+        return apiPromises;
+
+    }).then(function (apiPromises) {
+
+        return Promise.all(apiPromises);
+    }, function (err) {
+        console.log('err    :' + JSON.stringify(err));
+
+    }).then(function (apis) {
+        console.log('apis    :' + JSON.stringify(apis));
+
+        resultWrapper(res, null, apis);
+
+    });
+
 
 })
-
-let md5=require('./util/md5');
-router.get('/createAPI', function (req, res, next) {
-
-
-    console.log('creaeAPI');
-
-    let userId=req.session.user._id;
-    let email=req.session.user.email;
-    let emailName=email.split('@')[0];
-
-    let ruleList=req.query.ruleList;
-    let apiName=req.query.apiName;
-    let apiUrl=md5(req.session.user._id+apiName);
-    let encryptName=email+apiUrl;
-
-    APIModel.create({name:apiName,encryptName:encryptName,ruleList:ruleList,user_id:userId,apiUrl:apiUrl}, function (err, API) {
-
-        resultWrapper(res,err,API);
-
-    })
-
-})
-
-let tech=require('./util/tech');
-
-router.get('/generateAPI', function (req,res,next) {
-
-    let apiID=req.query.api_id;
-    let email=req.session.user.email;
-    let emailName=email.split('@')[0]
-
-    console.log('apiID  :'+apiID);
-
-    ruleModel.find({api_id:apiID}, function (err,rules) {
-
-        console.log('rules :'+JSON.stringify(rules));
-
-
-            let apiArticle={...article}
-            apiArticle.name=`${api.encryptName}`;
-
-            var articleDao=dao(apiArticle);
-
-            let promiseRules= tech(articleDao,rules);
-
-            Promise.all(promiseRules).then(function (values) {
-
-                resultWrapper(res,err,"success")
-
-            })
-
-        //ruleModel.where('_id').in(["589d622301edcc7ade10db2a","589d75a0585a4d80b1fce279"]).exec(function (err, rules) {
-        //
-        //    console.log('rules  :'+JSON.stringify(rules));
-        //
-
-        //
-        //
-        //});
-
-
-    })
-
-})
-
-
-
 
 router.get('/getStarList', function (req, res, next) {
 

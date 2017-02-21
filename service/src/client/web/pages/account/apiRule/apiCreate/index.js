@@ -14,16 +14,7 @@ import Step3 from '../../../success.js'
 
 const ruleList = (<div></div>);
 
-const steps = [{
-    title: 'First',
-    content: (<Step1/>),
-}, {
-    title: 'Second',
-    content: (<Step2/>),
-}, {
-    title: 'Last',
-    content: (<Step3 title='成功' desc='api创建成功'  path='/account/apiRule'/>),
-}];
+const steps = [];
 
 
 class APISteps extends React.Component {
@@ -31,7 +22,39 @@ class APISteps extends React.Component {
         super(props);
         this.state = {
             current: 0,
+            apiUrl:''
         };
+        this.setApi=this.setApi.bind(this);
+        this.getApi=this.getApi.bind(this);
+
+        let that=this;
+
+        steps.push({
+            title: 'First',
+            content: (<Step1 setApi={that.setApi}/>),
+        });
+        steps.push({
+            title: 'Second',
+            content: (<Step2 getApi={that.getApi}/>),
+        })
+
+        steps.push({
+            title: 'Last',
+            content: (<Step3 title='成功' desc='api创建成功'  path='/account/api'/>),
+        });
+
+    }
+
+    setApi(api){
+        console.log('setApi  api:'+api);
+        this.setState({api:api})
+    }
+
+    getApi(){
+        //console.log('getApi  api:'+api);
+
+        return this.state.api;
+
     }
 
     next() {
@@ -46,6 +69,7 @@ class APISteps extends React.Component {
 
     render() {
         const { current } = this.state;
+
         return (
             <div style={{maxWidth:'800px', margin:'0px auto 0px' }}>
                 <Steps current={current}>

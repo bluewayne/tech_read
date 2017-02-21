@@ -4,7 +4,6 @@
 
 import React from 'react';
 import {Link} from 'react-router';
-
 import { Collapse ,Button} from 'antd';
 import RuleList from './ruleList'
 

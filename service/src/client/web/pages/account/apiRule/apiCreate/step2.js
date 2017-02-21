@@ -8,40 +8,6 @@ import { message,Spin ,Button,Card} from 'antd';
 
 import {api} from '../../../../util'
 
-//
-//const MyProgress = React.createClass({
-//    getInitialState() {
-//        return {
-//            percent: 0,
-//        };
-//    },
-//    increase() {
-//        let percent = this.state.percent + 10;
-//        if (percent > 100) {
-//            percent = 100;
-//        }
-//        this.setState({percent});
-//    },
-//    decline() {
-//        let percent = this.state.percent - 10;
-//        if (percent < 0) {
-//            percent = 0;
-//        }
-//        this.setState({percent});
-//    },
-//    render() {
-//        return (
-//            <div>
-//                <Progress type="circle" percent={this.state.percent}/>
-//                <ButtonGroup>
-//                    <Button onClick={this.decline} icon="minus"/>
-//                    <Button onClick={this.increase} icon="plus"/>
-//                </ButtonGroup>
-//            </div>
-//        );
-//    },
-//});
-
 class step2 extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -58,7 +24,7 @@ class step2 extends React.PureComponent {
         that.setState({loading: true});
 
 
-        api.generateAPI({api_id: '58a2a06d4352e018fc3bbdad'}, function (res) {
+        api.generateAPI(that.props.getApi(), function (res) {
             that.setState({loading: false});
 
             message.success('create api success');
@@ -80,6 +46,8 @@ class step2 extends React.PureComponent {
 
     render() {
 
+        console.log('this.props.getApi() :'+JSON.stringify(this.props.getApi()));
+
         return (
             <div >
 
@@ -87,7 +55,7 @@ class step2 extends React.PureComponent {
 
                     <Card style={{ width: 700 }}>
                         <p>已经创建api:</p>
-                        <p>http://127.0.0.1:3001/api/articles/getArticles?api_id=62b6ea116736e118731d8ec86ed778aa</p>
+                        <p>{this.props.getApi()['showApiUrl']}</p>
                     </Card>
                 </Spin>
                 <br/>

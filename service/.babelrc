@@ -1,6 +1,14 @@
 /**
  * Created by liujinhe on 17/1/5.
  */
+
+ /**
+ *babel-polyfill 是对浏览器缺失API的支持。比如浏览器可能没有Array.from() 方法。
+ *babel-runtime 是为了减少重复代码而生的。 babel生成的代码，可能会用到一些_extend()， classCallCheck() 之类的工具函数，默认情况下，这些工具函数的代码会包含在编译后的文件中。如果存在多个文件，那每个文件都有可能含有一份重复的代码。
+ *add-module-exports https://github.com/59naga/babel-plugin-add-module-exports
+ *transform-react-display-name https://babeljs.io/docs/plugins/transform-react-display-name/和https://itbilu.com/javascript/react/4JIk-Q7Yl.html#displayName
+ */
+
 {
     "presets":
     [

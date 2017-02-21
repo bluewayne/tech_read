@@ -47,7 +47,7 @@ class index extends React.PureComponent {
 
                                     <SubMenu key="sub1" title={<span><Icon type="user" />用户中心</span>}>
                                         <Menu.Item key="1"><Link to='/account/rule'>规则管理</Link></Menu.Item>
-                                        <Menu.Item key="2">接口(API)管理</Menu.Item>
+                                        <Menu.Item key="2"><Link to='/account/api'>接口(API)管理</Link></Menu.Item>
                                         <Menu.Item key="3">option3</Menu.Item>
                                         <Menu.Item key="4">option4</Menu.Item>
                                     </SubMenu>

@@ -22,24 +22,26 @@ class EditableTable extends React.Component {//不能用PureComponent
                 dataIndex: 'name',
                 width: '30%',
                 render: (text, record, index) => this.renderColumns(this.state.data, index, 'name', text),
-            },
-            {
-                title: 'ruleList',
-                dataIndex: 'ruleList',
+            }
+            , {
+                title: 'ruleNameList',
+                dataIndex: 'ruleNameList',
                 width: '30%',
-                render: (text, record, index) => this.renderColumns(this.state.data, index, 'ruleList', text),
-            },{
-                title: 'apiUrl',
-                dataIndex: 'apiUrl',
+                render: (text, record, index) => this.renderColumns(this.state.data, index, 'ruleNameList', text),
+            }
+
+            , {
+                title: 'ApiUrl',
+                dataIndex: 'showApiUrl',
                 width: '30%',
-                render: (text, record, index) => this.renderColumns(this.state.data, index, 'apiUrl', text),
+                render: (text, record, index) => this.renderColumns(this.state.data, index, 'showApiUrl', text),
             }, {
                 title: 'operation',
                 dataIndex: 'operation',
                 render: (text, record, index) => {
                     const { editable } = this.state.data[index].name;
 
-                    console.log('editable   :'+editable);
+                    console.log('editable   :' + editable);
                     return (<div className="editable-row-operations">
                         {
                             editable ?
@@ -156,19 +158,17 @@ class EditableTable extends React.Component {//不能用PureComponent
 
         this.setState({data}, ()=> {
 
-            //console.log('this.setState callback');
-            //console.log({...data[index]})
-            //console.log('this.setState after callback');
 
-            this.updateRule(this.conRow2Rule({...data[index]}), () => {//setState的第二个参数是回调函数，是在组件渲染成功后触发的。这里的status有连个值cancel和save,table根据这个status选择是否用新的值替换旧的值
+            //this.updateRule(this.conRow2Rule({...data[index]}), () => {//setState的第二个参数是回调函数，是在组件渲染成功后触发的。这里的status有连个值cancel和save,table根据这个status选择是否用新的值替换旧的值
+            //
+            //
+            //    Object.keys(data[index]).forEach((item) => {
+            //        if (data[index][item] && typeof data[index][item].editable !== 'undefined') {
+            //            delete data[index][item].status;
+            //        }
+            //    });
+            //})
 
-
-                Object.keys(data[index]).forEach((item) => {
-                    if (data[index][item] && typeof data[index][item].editable !== 'undefined') {
-                        delete data[index][item].status;
-                    }
-                });
-            })
 
         })
 
@@ -177,6 +177,7 @@ class EditableTable extends React.Component {//不能用PureComponent
     render() {
         const { data } = this.state;
 
+        console.log('render data    :' + JSON.stringify(data));
 
         const dataSource = data.map((item) => {
             const obj = {};

@@ -21,7 +21,6 @@ class index extends React.PureComponent {
             let i=0;
             let rules=[];
             rules=res.content.map(function (rule ) {
-                //console.log('rule   :'+JSON.stringify(rule));
 
                 for(let key in rule){
                     let obj ={value: rule[key],editable:false}
@@ -33,6 +32,8 @@ class index extends React.PureComponent {
 
                 return rule;
             });
+
+            console.log('rules   :'+JSON.stringify(rules));
 
             that.setState({ds:rules});
 

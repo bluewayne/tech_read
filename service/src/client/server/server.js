@@ -7,6 +7,7 @@ var http = require('http');
 var path = require('path');
 var configuration = require('../../configuration');
 
+
 const routes = require('../web/routes');
 import {RouterContext,match} from 'react-router'
 import ReactDOM from 'react-dom/server'
@@ -17,7 +18,6 @@ export default  function () {
 
     var app = new express();
     var server = http.Server(app);
-
 
 //app.use(express.static(__dirname+'/public'))  暂时用不上
 
@@ -63,7 +63,6 @@ export default  function () {
         console.info(`page server run on ${configuration.client.host}:${configuration.client.port}`);
 
     })
-
 
 }
 

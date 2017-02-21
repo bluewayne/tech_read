@@ -16,7 +16,7 @@ router.get('/getArticles', function (req, res, next) {
 
     console.log('req.body   :' + JSON.stringify(req.query));
 
-    var api_id=req.query.api_id;
+    var apiUrl=req.query.apiUrl;
     var keyWord = req.query.keyWord;
     var pageNow = req.query.pageNow;//pageNow从1开始
     var pageNum = req.query.pageNum;
@@ -32,12 +32,12 @@ router.get('/getArticles', function (req, res, next) {
 
     let _articleModel=articleModel;
 
-    if(api_id){
+    if(apiUrl){
         let email=req.session.user.email;
         let emailName=email.split('@')[0];
 
         let APIArticle={...article};
-        APIArticle.name=`${emailName}${api_id}`
+        APIArticle.name=`${emailName}${apiUrl}`
 
         _articleModel = dao(APIArticle);
     }

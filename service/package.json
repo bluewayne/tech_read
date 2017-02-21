@@ -65,7 +65,7 @@
     "run-page": "nodemon ./src/client/server/server.render.babel.js --watch ./src/client --watch ./webpack",
     "run-page-delay": "npm-run-all delay run-page ",
     "page": "npm-run-all  --parallel build-page run-page-delay",
-    "dev": "npm-run-all --parallel hmr page",
+    "dev": "npm-run-all --parallel hmr page api",
     "delay": "node ./src/sleep 2000"
   }
 }

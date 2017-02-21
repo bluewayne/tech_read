@@ -46,65 +46,38 @@ const RuleForm = React.createClass({
                              placeholder="请命名规则的名字" onChange={that.ruleOnChange}/>),
             onOk() {
 
-                //console.log('that.state.ruleName    :'+that.state.ruleName);
                 let ruleName
-
                 that.state.ruleName && ( (ruleName = that.state.ruleName) && (ruleName = ruleName.replace(/\s/g, '')))
-
                 if (ruleName) {
-                    console.log('OK');
-                    console.log('that.state.ruleName    :' + that.state.ruleName);
-                    console.log(' ruleName   :' + '1' + ruleName + '1');
+
                     values.name = ruleName;
-                    //api.addRule(values, function (res) {
-                    //    console.log('res' + JSON.stringify(res));
-                    //    message.success('创建规则成功');
-                    //
-                    //
-                    //    let title='成功';
-                    //    let desc=`规则${ruleName}创建成功!`
-                    //    var successComponent = React.createClass({
-                    //        render: function() {
-                    //            return <success {{title,desc}}></success>
-                    //        }
-                    //    })
-                    //
-                    //    this.setState({successComponent:successComponent})
-                    //
-                    //});
+
+                    api.addRule(values, function (res) {
+                        console.log('res' + JSON.stringify(res));
+                        message.success('创建规则成功');
 
 
-                    let title = '成功';
-                    let desc = `规则${ruleName}创建成功!`;
+                        let title = '成功';
+                        let desc = `规则${ruleName}创建成功!`;
 
-                    var successComponent = React.createClass({
-                        render: function () {
-                            return <Success title={title} desc={desc}  path='/account/rule'></Success>
-                        }
-                    })
+                        var successComponent = React.createClass({
+                            render: function () {
+                                return <Success title={title} desc={desc}  path='/account/rule'></Success>
+                            }
+                        })
 
-                    message.success('创建规则成功');
+                        message.success('创建规则成功');
 
-                    that.setState({successComponent: successComponent})
-                    //
+                        that.setState({successComponent: successComponent})
+
+                    });
+
 
 
                 } else {
                     message.error('规则名字不能为空');
 
                 }
-
-
-                //let result = api.addRule(values, function (res) {
-                //    console.log('res' + JSON.stringify(res));
-                //    message.success('创建规则成功');
-                //
-                //});
-
-
-                //return new Promise((resolve, reject) => {
-                //    setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-                //}).catch(() => console.log('Oops errors!'));
 
             },
             onCancel() {
@@ -185,9 +158,7 @@ const RuleForm = React.createClass({
 
                 </div>
 
-                <Button onClick={this.showConfirm}>
-                    confirmation modal dialog
-                </Button>
+
 
             </Form>
         );

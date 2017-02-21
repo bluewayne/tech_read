@@ -6,6 +6,9 @@ module.exports={
     server:{
         input:'./src/client/server/server',
         output:'./build/server/server.js'
-    }
-
+    },
+    exclude_from_externals:
+        [
+            'antd'
+        ]
 }

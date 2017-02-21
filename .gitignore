@@ -39,3 +39,7 @@ buck-out/
 \.buckd/
 android/app/libs
 *.keystore
+
+service/npm-debug.log.*
+service/unit-test/
+service/unit-test

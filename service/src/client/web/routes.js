@@ -10,6 +10,7 @@ import rule from './pages/account/rule'
 import ruleCreate from './pages/account/rule/ruleCreate'
 import ruleList from './pages/account/rule/ruleList'
 
+import api from './pages/account/apiRule'
 import apiList from './pages/account/apiRule/apiList'
 import apiCreate from './pages/account/apiRule/apiCreate'
 import success from './pages/success.js'
@@ -31,7 +32,7 @@ export default (
                 <Route path='ruleList' component={ruleList}/>
 
 
-
+                <Route path='api' component={api}/>
                 <Route path='apiList' component={apiList}/>
                 <Route path='apiCreate' component={apiCreate}/>
 
