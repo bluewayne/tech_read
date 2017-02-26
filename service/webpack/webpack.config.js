@@ -11,14 +11,11 @@ const root_folder = path.resolve(__dirname, '..');
 
 
 var devMiddlewareScript = `webpack/hot/dev-server`;
-var hotMiddlewareScript = 'webpack-hot-middleware/client?path=http://localhost:3003/__webpack_hmr&timeout=20000&reload=true';
-
+var hotMiddlewareScript = `webpack-hot-middleware/client?path=http://127.0.0.1:${configuration.hmr.port}/__webpack_hmr&timeout=20000&reload=true`;
 //var hotReactScript=`react-hot-loader/patch`
 //var publicPath = `http://${configuration.hmr.host}:${configuration.hmr.port}/assets/`
 
-var publicPath = 'http://localhost:3003/';
-
-console.log('path   :' + path.resolve(root_folder, 'build/assets'));
+var publicPath = `http://127.0.0.1:${configuration.hmr.port}/`;
 
 function getLoaders(style) {
     return [
@@ -59,7 +56,7 @@ module.exports = {
         rules: [{
             test: /\.js$/,
             exclude: /(node_modules|bower_components)/,
-            use: 'babel-loader'
+            use: ['react-hot-loader', 'babel-loader']
         }, {
             test: /\.json$/,
             use: 'json-loader'
@@ -99,9 +96,9 @@ module.exports = {
                             loader: 'postcss-loader',
                             options: {
                                 plugins: function () {
-                                    return [
-                                        require('autoprefixer')
-                                    ];
+                                        return [
+                                            require('autoprefixer')
+                                        ];
                                 }
                             }
                         },

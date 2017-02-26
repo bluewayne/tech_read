@@ -6,14 +6,14 @@
 module.exports={
     client:{
       host:'127.0.0.1',
-      port:3001
+      port:2001
     },
     api:{
         host:'127.0.0.1',
-        port:3002
+        port:2002
     },
     hmr:{
         host:'127.0.0.1',
-        port:3003
+        port:2003
     }
 }

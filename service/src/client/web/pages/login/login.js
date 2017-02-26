@@ -35,6 +35,7 @@ class index extends React.PureComponent {
                     <Header><h1>用户登录/注册</h1></Header>
                     <Content style={style.container}>
                         <LoginPanel/>
+
                     </Content>
                     <Footer>@copyright bruce. Email:ljhjay1@163.com</Footer>
                 </Layout>
@@ -52,8 +53,5 @@ const style = {
     }
 }
 
-if (module.hot) {
-    module.hot.accept();
-}
 
 export default index;

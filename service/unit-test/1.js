@@ -10,4 +10,4 @@
 
 
 require('babel-register')
-require('./2.js')
+require('./5.js')

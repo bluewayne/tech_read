@@ -61,6 +61,10 @@ cd tech_read
 npm i
 react-native run-ios
 ```
+![Image text](./1.png)
+
+![Image text](./2.png)
+
 ![Image text](./react_show.gif)
 
 
